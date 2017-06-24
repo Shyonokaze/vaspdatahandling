@@ -9,9 +9,9 @@ import numpy as np
 
 fid = open('dm','rt')
 
-nm = [[3,3],[9,10]] #原子序列+原子质量
-layer=[[1,3,6],[2,4,5]] #分层
-
+nm = [[15],[127.6]] #原子序数及原子质量
+layer=[[1,6,11],[2,7,12],[3,8,13],[4,9,14],[5,10,15]] #同层原子序数
+s=26.295152009232361 #表面积
 N=3*sum(nm[0])
 mass=[None]*N
 FCX = [[0 for i in range(len(layer))] for i in range(len(layer)) ]
@@ -36,9 +36,24 @@ D2 = np.multiply(fc,mass)
 
 for i in range(len(layer)):
     for j in range(len(layer)):
-        add = 0
         for k in layer[i]:
             for l in layer[j]:
                 FCX[i][j] = FCX[i][j] + D2[k*3-3,l*3-3]
                 FCY[i][j] = FCY[i][j] + D2[k*3-2,l*3-2]
                 FCZ[i][j] = FCZ[i][j] + D2[k*3-1,l*3-1]
+        FCX[i][j]=FCX[i][j]*16.021892*100/s
+        FCY[i][j]=FCY[i][j]*16.021892*100/s
+        FCZ[i][j]=FCZ[i][j]*16.021892*100/s
+
+for i in range(len(layer)):
+    print(FCX[i])
+
+print('')
+
+for i in range(len(layer)):
+    print(FCY[i])
+
+print('')
+
+for i in range(len(layer)):
+    print(FCZ[i])
